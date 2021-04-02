@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Selenium inside of AWS Lambda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.45">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  </head>
+  <body>
+    <div class="article">
+      <div style="text-align: center;">
+        <p class="article_title">Selenium inside of AWS Lambda</p>
+        <div class="date">2021.03.04</div>
+        <br>
+        <div class="table_contents">
+            <a href="#introduction">Introduction</a>
+        </div>
+        <div class="table_contents">
+            <a href="#overview">Overview</a>
+        </div>
+        <div class="table_contents">
+            <a href="#layer">Layer</a>
+        </div>
+        <div class="table_contents">
+            <a href="#driver_setup">Chromedriver Setup</a>
+        </div>
+        <div class="table_contents">
+          <a href="#settings">Settings</a>
+      </div>
+        <div class="table_contents">
+            <a href="#conclusion">Conclusion</a>
+        </div>
+      </div>
+
+      <h3 id="introduction" class="section_header">Introduction</h3>
+      <p class="section">
+        Simple guide to setup and run Selenium WebDriver inside of an
+        AWS Lambda function?
+        <br><br>
+        You got it.
+      </p>
+
+      <h3 id="overview" class="section_header">Overview</h3>
+      <p class="section">
+        This approach creates an AWS Lambda function running <a href="https://www.selenium.dev/" target="_blank">Selenium</a>
+        on a headless <a href="https://www.chromium.org/Home" target="_blank">Chromium</a> in Python. We will be using an AWS Lambda 
+        <a href ="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html" target="_blank">Layer</a> for Selenium and Chromium browser.
+      </p>
+
+      <h3 id="layer" class="section_header">Layer</h3>
+      <p class="section">
+        Let's setup a Layer for our Lambda function consisting of the necessary Python libraries, Chromedriver, and headless Chrome browser.
+        The default size for a zip file upload (without hosting the files in an S3 bucket) is 50mb; below links the Chromedriver and Chrome
+        versions which will meet the upload requirement.
+      </p>
+      <p class="section">
+        Install the Selenium Python package into a specified folder:
+      </p>
+      <pre class="codeblock">
+      pip install --target=<\folder path here\> selenium
+      </pre>
+
+      <p>
+        <a href ="https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip" target="_blank">Chromedriver</a> and <a href ="https://github.com/adieuadieu/serverless-chrome/releases" target="_blank">headless-chromium</a> in the same folder.
+      </p>
+      <img src="../../assets/images/selenium_zip_files.png" alt="Selenium Layer Zip Files">
+
+      <p>
+        Let's upload our Layer to AWS and add it to our Lambda function:
+      </p>
+      <img src="../../assets/images/selenium_layer.png" alt="Selenium AWS Layer">
+
+      <h3 id="driver_setup" class="section_header">Chromedriver Setup</h3>
+      <p>
+        Chromedriver and Chromium need to be accessible and writeable;
+        let's move them into the <code>tmp</code> folder and update their permissions.
+      </p>
+      <pre class="codeblock">
+      os.system("cp /opt/yourfolderhere/chromedriver /tmp/chromedriver")
+      os.system("cp /opt/yourfolderhere/headless-chromium /tmp/headless-chromium")
+      os.chmod("/tmp/chromedriver", 0o777)
+      os.chmod("/tmp/headless-chromium", 0o777)
+      </pre>
+
+      <p>
+        Chromedriver properties for best result:
+      </p>
+      <pre class="codeblock">
+      chrome_options = webdriver.ChromeOptions()
+      chrome_options.add_argument('--headless')
+      chrome_options.add_argument('--disable-gpu')
+      chrome_options.add_argument('--disable-dev-shm-usage')
+      chrome_options.add_argument('--no-sandbox')
+      chrome_options.add_argument('--hide-scrollbars')
+      chrome_options.add_argument('--enable-logging')
+      chrome_options.add_argument('--log-level=0')
+      chrome_options.add_argument('--v=99')
+      chrome_options.add_argument('--single-process')
+      chrome_options.add_argument('--ignore-certificate-errors')
+      chrome_options.binary_location = "/tmp/headless-chromium"
+      driver = webdriver.Chrome(executable_path="/tmp/chromedriver", chrome_options=chrome_options)
+      </pre>
+
+      <h3 id="settings" class="section_header">Settings</h3> 
+      <p>For better performance, increase memory and timeout for the Lambda.</p>
+      <img src="../../assets/images/aws_time_memory.png" alt="Lambda Memory & Timeout">
+      
+      <h3 id="conclusion" class="section_header">Conclusion</h3>
+      <p>
+        Run a test.
+      </p>
+      <code>
+      driver.get('https://www.google.com')
+      <br>
+      WebDriverWait(driver, 10).until(expected_conditions.title_is('Google'))
+      </code>
+      <br>
+      <br>
+      <p>
+        How about Git in my Lambda? Go <a href="https://github.com/lambci/git-lambda-layer" target="_blank">here</a>.
+      </p>
+    </div>
+  </body>
+</html>
