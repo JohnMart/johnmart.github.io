@@ -1,0 +1,367 @@
+:root {
+    --opacity: 1;
+    --experience-icon-color: 30 64 175;
+    --experience-icon-opacity: 1;
+    --circle-background-color: 229 231 235;
+    --job-details-color: 107 114 128;
+    --div-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05), 0 2px 8px 0 rgba(0, 0, 0, 0.09);
+    --div-shadow-hover: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 4px 8px 0 rgba(0, 0, 0, 0.09);
+}
+
+/*Common*/
+.smaller-font {
+    font-size: smaller
+}
+
+.small-font {
+    font-size: small;
+}
+
+.medium-font {
+    font-size: medium;
+}
+
+.large-font {
+    font-size: large;
+}
+
+.larger-font {
+    font-size: larger;
+}
+
+.shadow {
+    box-shadow: var(--div-shadow);
+    padding: 1rem;
+    border-color: rgb(229 231 235 / var(--opacity));
+    border-width: 1px;
+    border-radius: .5rem;
+}
+
+.shadow:hover {
+    box-shadow: var(--div-shadow-hover);
+}
+
+.box {
+    margin: 1rem;
+    flex-basis: 25%;
+}
+
+body {
+    font-family: "Cambria";
+    background: #fafafa;
+}
+
+.heading {
+    font-size: x-large;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/*Top Bar Section*/
+#top-bar {
+    margin-top: 2rem;
+}
+
+.avatar {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.avatar img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    padding: .25rem;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.avatar-emoji {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    bottom: 0;
+    right: 0;
+    border-radius: 100%;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid black;
+}
+
+/*Introduction Section*/
+.introduction {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-weight: 700;
+}
+
+.name {
+    font-size: xx-large;
+}
+
+.title {
+    font-size: large;
+    position: relative;
+    top: 15px;
+}
+
+.socials {
+    list-style: none;
+    display: inline-flex;
+    padding: 0;
+    margin-top: 35px;
+    margin-left: 35px;
+}
+
+.socials li {
+    transform: scale(1.5);
+}
+
+.socials li svg {
+    margin-right: 25px;
+}
+
+.socials li svg:hover {
+    transform: scale(1.25)
+}
+
+.socials a, a:visited, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: black
+}
+
+/*Resume Section*/
+.flex {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1em;
+}
+
+/*Experience*/
+#experience {
+    padding-top: 3rem;
+}
+
+.experience-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.experience-border {
+    border-left: 1px solid gray;
+}
+
+.experience-list li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.experience-list li::before {
+    border: 1px solid gray;
+}
+
+.circle {
+    border-radius: 50%;
+    background-color: rgb(var(--circle-background-color));
+    display: flex;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-top: 25px;
+}
+
+.circle.active {
+    animation: pulse 2s infinite;
+}
+
+.bi-briefcase {
+    color: rgb(var(--experience-icon-color)/var(--experience-icon-opacity));
+    margin: 7px;
+}
+
+.job-title {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    flex: 1 33%;
+}
+
+.job-details {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 50px;
+    margin-bottom: 0px;
+    color: rgb(var(--job-details-color)/var(--opacity));
+    flex-wrap: wrap;
+    flex: 1 33%;
+}
+
+.other-title {
+    font-size: small;
+    color: black;
+    margin-top: -0.3rem;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgb(var(--circle-background-color));
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgb(var(--circle-background-color));
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgb(var(--circle-background-color));
+    }
+}
+
+.job-box, .cert-box {
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+/*Skills*/
+.skills {
+    margin-top: 1rem;
+}
+
+.skill-content {
+    margin-bottom: 15px;
+}
+
+.skill-name {
+    margin-bottom: 6px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.skill-percentage-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 10px;
+    border: 1px solid #a8e9e9;
+    border-radius: 10px;
+}
+
+.skill-percentage {
+    width: 60%;
+    height: 10px;
+    background-color: #3cb5b5;
+}
+
+/*Certifications*/
+.certifications {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.cert-box {
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.cert-title {
+    margin: .5rem;
+}
+
+.copado {
+    background-image: url('../images/copado.png');
+    background-size: contain;
+    background-color: rgba(255,255,255, 0.90);
+    background-blend-mode: lighten;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*Awards*/
+.award {
+    text-align: center;
+    padding: .75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.award-title, .cert-title {
+    font-weight: 600;
+}
+
+/*Education*/
+.education {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.education-details {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.seal {
+    margin-top: .5rem;
+}
+
+.college {
+    font-weight: 600;
+    padding: 1rem;
+}
+
+.degree {
+    margin-bottom: 1rem;
+}
+
+/*Viewport Experience*/
+@media (min-width: 320px) { 
+    #resume {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 1200px) { 
+    #resume {
+        flex-direction: row;
+    }
+
+    .education {
+        margin-top: 2rem;
+    }
+    
+    .certifications {
+        margin-top: 6.5rem;
+    }
+}
